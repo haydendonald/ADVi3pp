@@ -8,7 +8,10 @@
 **/
 
 // Other settings //
-#define BOOTSCREEN_ENABLED //Still needs implementing
+#define CUSTOM_START_PAGE (Page::Main)      //This will disable the bootscreen and goto a first page (1.)
+#define BOOT_TEXT   "We are ready to go!"   //What text should be displayed by default (1.)
+#define ENABLE_TIME_REPLACEMENT             //This will replace the fan speed and Z position with time elapsed and left values
+
 
 // Probe settings //
 #define PROBE_ENABLED               //Is there a probe? (1.)

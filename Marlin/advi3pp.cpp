@@ -286,8 +286,21 @@ void ADVi3pp_::init()
     graphs.clear();
     dimming.reset(true);
     reset_status();
-    show_boot_page();
-    set_status(F("ADVi3++ is ready"));
+
+    //Added by Hayden Donald 2020
+    #ifdef CUSTOM_START_PAGE
+        pages.show_page(CUSTOM_START_PAGE, ShowOptions::None);
+    #else
+        show_boot_page();
+    #endif
+
+    #ifdef BOOT_TEXT
+        set_status(F(BOOT_TEXT));
+    #else
+        set_status(F("ADVi3++ is ready"));
+    #endif
+
+    /////////////////////////////
 }
 
 //! Background idle tasks
@@ -312,11 +325,21 @@ bool ADVi3pp_::is_busy()
 }
 
 //! Update the progress bar if the printer is printing for the SD card
+uint16_t progress_bar_time_elapsed;
+uint16_t progress_bar_time_left;
 void ADVi3pp_::update_progress()
 {
     // Progress bar % comes from SD when actively printing
-    if(card.sdprinting)
+    if(card.sdprinting) {
         progress_bar_percent = card.percentDone();
+        
+        //Added by Hayden Donald 2020
+        #ifdef ENABLE_TIME_REPLACEMENT
+            progress_bar_time_elapsed = print_job_timer.duration();
+            progress_bar_time_left = card.percentDone() == 0 ? 0 : (progress_bar_time_elapsed * card.percentDone()) - progress_bar_time_elapsed;
+        #endif
+        /////////////////////////////
+    }
 }
 
 //! Get the current Z height (optionally multiplied by a factor)
@@ -353,8 +376,18 @@ void ADVi3pp_::send_status_data(bool force_update)
           << Uint16(Temperature::degBed())
           << Uint16(Temperature::degTargetHotend(0))
           << Uint16(Temperature::degHotend(0))
-          << Uint16(scale(fanSpeeds[0], 255, 100))
-          << Uint16(get_current_z_height(100))
+
+         //Added by Hayden Donald 2020
+          #ifdef ENABLE_TIME_REPLACEMENT
+            << Uint16(progress_bar_time_elapsed / 60)
+            << Uint16(progress_bar_time_left)
+          #else
+            << Uint16(scale(fanSpeeds[0], 255, 100))
+            << Uint16(get_current_z_height(100))
+          #endif
+          /////////////////////////////
+
+
           << Uint16(progress_bar_low)
           << Uint16(progress_var_high)
           << 0_u16 // TODO
