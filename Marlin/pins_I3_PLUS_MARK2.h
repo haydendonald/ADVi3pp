@@ -37,8 +37,11 @@
 //
 #define X_STOP_PIN         54   // PF0 / A0
 #define Y_STOP_PIN         24   // PA2 / AD2
-#define Z_STOP_PIN         6    // PH3 / PCINT8
-#define Z_MIN_PROBE_PIN    6    // PH3 / PCINT8
+#define Z_STOP_PIN         23    // PH3 / PCINT8
+
+#ifdef PROBE_ENABLED
+    #define Z_MIN_PROBE_PIN    23    // PH3 / PCINT8
+#endif
 
 //
 // Steppers
@@ -49,7 +52,7 @@
 
 #define Y_STEP_PIN         64   // PK2 / A10
 #define Y_DIR_PIN          65   // PK3 / A11
-#define Y_ENABLE_PIN       2    // PE4 / INT4
+#define Y_ENABLE_PIN       63    // PE4 / INT4
 
 #define Z_STEP_PIN         67   // PK5 / A13
 #define Z_DIR_PIN          69   // PK7 / A15

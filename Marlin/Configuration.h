@@ -96,7 +96,7 @@
 // startup. Implementation of an idea by Prof Braino to inform user that any changes made to this
 // build by the user have been successfully uploaded into firmware.
 // @advi3++: Change the author name
-#define STRING_CONFIG_H_AUTHOR "(andrivet)" // Who made the changes.
+#define STRING_CONFIG_H_AUTHOR "(haydendonald)" // Who made the changes.
 #define SHOW_BOOTSCREEN
 #define STRING_SPLASH_LINE1 SHORT_BUILD_VERSION // will be shown during bootup in line 1
 #define STRING_SPLASH_LINE2 WEBSITE_URL         // will be shown during bootup in line 2
@@ -871,17 +871,19 @@
 #define XY_PROBE_SPEED 6000
 
 // Feedrate (mm/m) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_SPEED_FAST HOMING_FEEDRATE_Z
+#define Z_PROBE_SPEED_FAST HOMING_FEEDRATE_Z / FAST_PROBE_DIVIDER
 
 // Feedrate (mm/m) for the "accurate" probe of each point
 // @advi3++: Use a far slower speed for the second measure
-#define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 2)
+#define Z_PROBE_SPEED_SLOW HOMING_FEEDRATE_Z / SLOW_PROBE_DIVIDER
 
 // The number of probes to perform at each point.
 //   Set to 2 for a fast/slow probe, using the second probe result.
 //   Set to 3 or more for slow probes, averaging the results.
 // @advi3++: Experimental - only one measure
-//#define MULTIPLE_PROBING 2
+#ifdef PROBE_COUNT
+  #define MULTIPLE_PROBING PROBE_COUNT
+#endif
 
 /**
  * Z probes require clearance when deploying, stowing, and moving between
@@ -1122,7 +1124,7 @@
 #if ENABLED(AUTO_BED_LEVELING_LINEAR) || ENABLED(AUTO_BED_LEVELING_BILINEAR)
 
   // Set the number of grid points per dimension.
-  #define GRID_MAX_POINTS_X 3
+  #define GRID_MAX_POINTS_X PROBE_MAX_POINTS
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Set the boundaries for probing (where the probe can reach).
@@ -1247,19 +1249,6 @@
 //
 // @advi3++: From v4, use safe homing. From 4.0.1 only for BLTouch
 
-#if defined(ADVi3PP_BLTOUCH) || defined(ADVi3PP_BLTOUCH3)
-#define Z_SAFE_HOMING
-#endif
-
-#if ENABLED(Z_SAFE_HOMING)
-#if ENABLED(ADVi3PP_PROBE) // @advi3++: In the middle of the bed
-  #define Z_SAFE_HOMING_X_POINT ((X_BED_SIZE) / 2)    // X point for Z homing when homing all axes (G28).
-  #define Z_SAFE_HOMING_Y_POINT ((Y_BED_SIZE) / 2)    // Y point for Z homing when homing all axes (G28).
-#else // @advi3++: No probe -> in the corner
-  #define Z_SAFE_HOMING_X_POINT ((X_MIN_POS) + 10)    // X point for Z homing when homing all axes (G28).
-  #define Z_SAFE_HOMING_Y_POINT ((Y_MIN_POS) + 10)    // Y point for Z homing when homing all axes (G28).
-#endif
-#endif
 
 // Homing speeds (mm/m)
 #define HOMING_FEEDRATE_XY 6000 // @advi3++
