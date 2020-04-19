@@ -12,6 +12,7 @@ This project aims to develop a more personal firmware for my 3D printer.
 ### Features added so far
 * Inductive probe
 * Filament runout sensor
+* Custom welcome message
 
 # Thanks
 
