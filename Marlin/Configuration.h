@@ -881,9 +881,6 @@
 //   Set to 2 for a fast/slow probe, using the second probe result.
 //   Set to 3 or more for slow probes, averaging the results.
 // @advi3++: Experimental - only one measure
-#ifdef PROBE_COUNT
-  #define MULTIPLE_PROBING PROBE_COUNT
-#endif
 
 /**
  * Z probes require clearance when deploying, stowing, and moving between
