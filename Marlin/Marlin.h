@@ -43,6 +43,7 @@
 #include "fastio.h"
 #include "utility.h"
 #include "serial.h"
+#include "customADVSettings.h"
 #include "advi3pp.h"
 
 void idle(
