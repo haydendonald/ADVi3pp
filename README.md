@@ -2,18 +2,13 @@
 This project aims to develop a more personal firmware for my 3D printer. 
 
 ### This project aims to
-* Add support for a inductive probe sitting behind the extruder with [model](https://www.thingiverse.com/thing:4297396) (Done!)
-* Add the ability to remove the boot screen (Done!)
-* Add support for power recovery (not sure if possible with the hardware)
-* Add support for adjustments to the read auto leveling values (as my printer sends to miss read on one side)
-* Add print left time on the print screen (Done!)
-* Make the print progress bar larger
 
 ### Features added so far
-* Inductive probe
 * Filament runout sensor
 * Custom welcome message
 * Print duration and time left on display (Replaces the fan speed and Z height values)
+* Add support for a inductive probe sitting behind the extruder with [model](https://www.thingiverse.com/thing:4297396)
+* Add support for adjustments to the read auto leveling values (as my printer sends to miss read on one side)
 
 # Thanks
 
