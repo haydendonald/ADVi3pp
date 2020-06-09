@@ -5210,7 +5210,14 @@ void home_all_axes() { gcode_G28(true); }
 
         #elif ENABLED(AUTO_BED_LEVELING_BILINEAR)
 
-          z_values[xCount][yCount] = measured_z + zoffset;
+          //Added by Hayden Donald 2020
+          #ifdef ADJUST_AUTOLEVEL_FOR_SCEW
+              float z_offsets[GRID_MAX_POINTS_X][GRID_MAX_POINTS_Y] = Z_ADJUSTMENT_VALUES;
+              z_values[xCount][yCount] = (measured_z + zoffset) + z_offsets[(GRID_MAX_POINTS_Y - 1) - yCount][xCount];
+          #else
+            z_values[xCount][yCount] = measured_z + zoffset;
+          #endif
+
 
           #if ENABLED(DEBUG_LEVELING_FEATURE)
             if (DEBUGGING(LEVELING)) {
@@ -5393,15 +5400,8 @@ void home_all_axes() { gcode_G28(true); }
 
             #elif ENABLED(AUTO_BED_LEVELING_BILINEAR)
 
+              z_values[xCount][yCount] = measured_z + zoffset;
 
-              //Added by Hayden Donald 2020
-              #ifdef ADJUST_Z_READINGS
-                float z_offsets[GRID_MAX_POINTS_X][GRID_MAX_POINTS_Y] = Z_ADJUSTMENT_VALUES;
-                z_values[xCount][yCount] = (measured_z + zoffset) + z_offsets[(GRID_MAX_POINTS_Y - 1) - yCount][xCount];
-              #else
-                z_values[xCount][yCount] = measured_z + zoffset;
-              #endif
-              //////////////////////////////
             #endif
 
             abl_should_enable = false;

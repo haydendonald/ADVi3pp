@@ -300,7 +300,6 @@ void ADVi3pp_::init()
         set_status(F("ADVi3++ is ready"));
     #endif
 
-    /////////////////////////////
 }
 
 //! Background idle tasks
@@ -330,16 +329,15 @@ uint16_t progress_bar_time_left;
 void ADVi3pp_::update_progress()
 {
     // Progress bar % comes from SD when actively printing
-    if(card.sdprinting) {
+    if(card.sdprinting)
         progress_bar_percent = card.percentDone();
-        
+
         //Added by Hayden Donald 2020
         #ifdef ENABLE_TIME_REPLACEMENT
             progress_bar_time_elapsed = print_job_timer.duration();
-            progress_bar_time_left = card.percentDone() == 0 ? 0 : (progress_bar_time_elapsed * card.percentDone()) - progress_bar_time_elapsed;
+            progress_bar_time_left = card.percentDone() < 10 ? 0 : progress_bar_time_elapsed * (1 - (card.percentDone() / 100));
         #endif
-        /////////////////////////////
-    }
+
 }
 
 //! Get the current Z height (optionally multiplied by a factor)
@@ -377,15 +375,14 @@ void ADVi3pp_::send_status_data(bool force_update)
           << Uint16(Temperature::degTargetHotend(0))
           << Uint16(Temperature::degHotend(0))
 
-         //Added by Hayden Donald 2020
-          #ifdef ENABLE_TIME_REPLACEMENT
+        //Added by Hayden Donald 2020
+        #ifdef ENABLE_TIME_REPLACEMENT
             << Uint16(progress_bar_time_elapsed / 60)
             << Uint16(progress_bar_time_left)
-          #else
-            << Uint16(scale(fanSpeeds[0], 255, 100))
-            << Uint16(get_current_z_height(100))
-          #endif
-          /////////////////////////////
+        #else
+          << Uint16(scale(fanSpeeds[0], 255, 100))
+          << Uint16(get_current_z_height(100))
+        #endif
 
 
           << Uint16(progress_bar_low)

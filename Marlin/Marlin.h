@@ -43,9 +43,8 @@
 #include "fastio.h"
 #include "utility.h"
 #include "serial.h"
-#include "customADVSettings.h"
+#include "ADVCustomSettings.h"
 #include "advi3pp.h"
-
 void idle(
   #if ENABLED(ADVANCED_PAUSE_FEATURE)
     bool no_stepper_sleep = false  // pass true to keep steppers from disabling on timeout

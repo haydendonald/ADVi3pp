@@ -57,9 +57,7 @@ public:
     return false;
   }
 
-  static void set_z(const int8_t px, const int8_t py, const float &z) { 
-        z_values[px][py] = z;
-  }
+  static void set_z(const int8_t px, const int8_t py, const float &z) { z_values[px][py] = z; }
 
   static inline void zigzag(const int8_t index, int8_t &px, int8_t &py) {
     px = index % (GRID_MAX_POINTS_X);
