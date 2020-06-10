@@ -274,6 +274,7 @@
 #include "parser.h"
 #include "advi3pp.h" // @advi3++
 #include "advi3pp_log.h"
+#include "ADVCustomSettings.h"
 
 // @advi3++: This is only to ensure that Jetbrains CLion is parsing code properly inside the IDE
 #ifdef __CLION_IDE__
@@ -4815,7 +4816,6 @@ void home_all_axes() { gcode_G28(true); }
    *
    */
   inline void gcode_G29() {
-
     #if ENABLED(DEBUG_LEVELING_FEATURE) || ENABLED(PROBE_MANUALLY)
       const bool seenQ = parser.seen('Q');
     #else
@@ -5210,15 +5210,6 @@ void home_all_axes() { gcode_G28(true); }
 
         #elif ENABLED(AUTO_BED_LEVELING_BILINEAR)
 
-          //Added by Hayden Donald 2020
-          #ifdef ADJUST_AUTOLEVEL_FOR_SCEW
-              float z_offsets[GRID_MAX_POINTS_X][GRID_MAX_POINTS_Y] = Z_ADJUSTMENT_VALUES;
-              z_values[xCount][yCount] = (measured_z + zoffset) + z_offsets[(GRID_MAX_POINTS_Y - 1) - yCount][xCount];
-          #else
-            z_values[xCount][yCount] = measured_z + zoffset;
-          #endif
-
-
           #if ENABLED(DEBUG_LEVELING_FEATURE)
             if (DEBUGGING(LEVELING)) {
               SERIAL_PROTOCOLPAIR("Save X", xCount);
@@ -5400,7 +5391,16 @@ void home_all_axes() { gcode_G28(true); }
 
             #elif ENABLED(AUTO_BED_LEVELING_BILINEAR)
 
-              z_values[xCount][yCount] = measured_z + zoffset;
+              //Added by Hayden Donald 2020
+              #ifdef ADJUST_AUTOLEVEL_FOR_SCEW
+                  float z_offsets[GRID_MAX_POINTS_X][GRID_MAX_POINTS_Y] = Z_ADJUSTMENT_VALUES;
+                  z_values[xCount][yCount] = (measured_z + zoffset) + z_offsets[(GRID_MAX_POINTS_Y - 1) - yCount][xCount];
+              #else
+                z_values[xCount][yCount] = measured_z + zoffset;
+              #endif
+
+
+              // z_values[xCount][yCount] = measured_z + zoffset;
 
             #endif
 
