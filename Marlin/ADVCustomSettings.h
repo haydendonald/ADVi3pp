@@ -6,7 +6,7 @@ Settings file for modifications to the ADVi3pp firmware
 #define CUSTOM_START_PAGE (Page::Main)
 
 //Custom boot text. Comment to disable
-#define BOOT_TEXT   "Hi Rohan I'm Alive!!"
+#define BOOT_TEXT   "Lets GOOOoOoo"
 
 //Adjust auto level Z values for error in the printer. Comment to disable
 #define ADJUST_AUTOLEVEL_FOR_SCEW
@@ -48,7 +48,7 @@ Lastly go though each point once uploaded and double check the height is correct
 
 #define Z_ADJUSTMENT_VALUES \
     {\
-        {0.2, 0.05, -0.1}, \
-        {0.15, 0, -0.1}, \ 
-        {0.1, 0.05, 0}  \
+        {0, 0, 0}, \
+        {0, 0, 0}, \ 
+        {0, 0, 0}  \
     }
