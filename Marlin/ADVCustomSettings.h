@@ -46,9 +46,18 @@ Lastly go though each point once uploaded and double check the height is correct
 
 */
 
+
 #define Z_ADJUSTMENT_VALUES \
     {\
         {0, 0, 0}, \
         {0, 0, 0}, \ 
         {0, 0, 0}  \
     }
+
+//My printer settings
+// #define Z_ADJUSTMENT_VALUES \
+//     {\
+//         {0.03, 0.05, 0.07}, \
+//         {-0.1, 0, 0.05}, \ 
+//         {-0.1, 0, 0.05}  \
+//     }
