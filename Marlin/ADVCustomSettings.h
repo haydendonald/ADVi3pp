@@ -6,13 +6,16 @@ Settings file for modifications to the ADVi3pp firmware
 #define CUSTOM_START_PAGE (Page::Main)
 
 //Custom boot text. Comment to disable
-#define BOOT_TEXT   "Lets GOOOoOoo"
+#define BOOT_TEXT   "3D Printer"
 
 //Adjust auto level Z values for error in the printer. Comment to disable
 #define ADJUST_AUTOLEVEL_FOR_SCEW
 
 //Enable replacing of the Z and fan values on the LCD with the time elapsed and time left
 #define ENABLE_TIME_REPLACEMENT
+
+//Disable the lower temperature limits (This is useful for cold start situations like me as my printer lives in the shed)
+#define FIX_LOW_END_TEMP
 
 //These values will adjust the read points. 
 //If the sensor reads 0.2 and the value below is -0.4 the final offset will be -0.2
